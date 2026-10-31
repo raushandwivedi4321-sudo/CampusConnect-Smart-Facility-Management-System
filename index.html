@@ -1,0 +1,1242 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Campus - Facility Hub</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f1f5f9;
+    color: #1e293b;
+}
+
+.hidden {
+    display: none !important;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0 15px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    outline: none;
+}
+
+input:focus, select:focus {
+    border-color: #2563eb;
+}
+
+/* AUTHENTICATION */
+
+.auth-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #0f172a, #1d4ed8);
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 430px;
+    background: white;
+    padding: 35px;
+    border-radius: 18px;
+    box-shadow: 0 20px 50px #0003;
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.logo h1 {
+    color: #2563eb;
+    font-size: 27px;
+}
+
+.logo p {
+    color: #64748b;
+    margin-top: 8px;
+}
+
+.auth-card h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.auth-card label {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.primary-btn {
+    width: 100%;
+    padding: 13px;
+    background: #2563eb;
+    color: white;
+    border-radius: 8px;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.primary-btn:hover {
+    background: #1d4ed8;
+}
+
+.auth-links {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 14px;
+}
+
+.auth-links a {
+    color: #2563eb;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.auth-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.auth-tabs button {
+    flex: 1;
+    padding: 10px;
+    background: #e2e8f0;
+    border-radius: 7px;
+}
+
+.auth-tabs button.active {
+    background: #2563eb;
+    color: white;
+}
+
+/* DASHBOARD */
+
+.app-section {
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    background: #0f172a;
+    color: white;
+    position: fixed;
+    height: 100vh;
+    padding: 25px 15px;
+    left: 0;
+    top: 0;
+}
+
+.sidebar h2 {
+    margin: 5px 10px 35px;
+    color: #60a5fa;
+}
+
+.sidebar button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 14px;
+    margin-bottom: 8px;
+    background: transparent;
+    color: #cbd5e1;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.sidebar button:hover,
+.sidebar button.active {
+    background: #1d4ed8;
+    color: white;
+}
+
+.main {
+    margin-left: 250px;
+    padding: 25px;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+.topbar h1 {
+    font-size: 25px;
+}
+
+.logout-btn {
+    background: #fee2e2;
+    color: #dc2626;
+    padding: 11px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.welcome {
+    background: linear-gradient(120deg, #2563eb, #6366f1);
+    color: white;
+    padding: 30px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+}
+
+.welcome h2 {
+    margin-bottom: 10px;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background: white;
+    padding: 22px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px #00000008;
+}
+
+.stat-card h3 {
+    font-size: 27px;
+    color: #2563eb;
+    margin-bottom: 8px;
+}
+
+.content-section {
+    display: none;
+}
+
+.content-section.active {
+    display: block;
+}
+
+.section-title {
+    margin-bottom: 20px;
+}
+
+/* FACILITIES */
+
+.facility-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.facility-card {
+    background: white;
+    padding: 22px;
+    border-radius: 13px;
+    box-shadow: 0 4px 15px #0000000a;
+}
+
+.facility-icon {
+    font-size: 35px;
+    margin-bottom: 15px;
+}
+
+.facility-card h3 {
+    margin-bottom: 10px;
+}
+
+.facility-card p {
+    color: #64748b;
+    font-size: 14px;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.book-btn {
+    background: #2563eb;
+    color: white;
+    padding: 11px 15px;
+    border-radius: 7px;
+    width: 100%;
+}
+
+.book-btn:hover {
+    background: #1d4ed8;
+}
+
+/* TABLE */
+
+.table-wrapper {
+    overflow-x: auto;
+    background: white;
+    padding: 18px;
+    border-radius: 12px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+}
+
+th, td {
+    text-align: left;
+    padding: 14px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+th {
+    background: #eff6ff;
+}
+
+.status {
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.Pending {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.Approved {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.Rejected {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.action-btn {
+    padding: 7px 10px;
+    border-radius: 5px;
+    margin: 2px;
+    color: white;
+}
+
+.approve {
+    background: #16a34a;
+}
+
+.reject {
+    background: #dc2626;
+}
+
+/* PROFILE */
+
+.profile-card {
+    background: white;
+    padding: 25px;
+    max-width: 500px;
+    border-radius: 12px;
+    line-height: 2;
+}
+
+/* BOOKING FORM */
+
+.booking-form {
+    background: white;
+    max-width: 500px;
+    padding: 25px;
+    border-radius: 12px;
+}
+
+.booking-form label {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.cancel-btn {
+    background: #64748b;
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    width: 100%;
+    margin-top: 8px;
+}
+
+@media(max-width: 950px) {
+    .facility-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 650px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .sidebar h2 {
+        margin-bottom: 15px;
+    }
+
+    .sidebar button {
+        display: inline-block;
+        width: auto;
+        margin: 3px;
+        padding: 10px;
+    }
+
+    .main {
+        margin-left: 0;
+        padding: 15px;
+    }
+
+    .facility-grid,
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .auth-card {
+        padding: 25px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN AND SIGNUP SECTION -->
+<section id="authSection" class="auth-section">
+    <div class="auth-card">
+
+        <div class="logo">
+            <h1>🎓 Smart Campus</h1>
+            <p>Facility & Resource Hub</p>
+        </div>
+
+        <div class="auth-tabs">
+            <button id="studentTab" class="active"
+                onclick="switchAuth('login')">Student</button>
+            <button id="adminTab"
+                onclick="switchAuth('admin')">Admin</button>
+        </div>
+
+        <!-- STUDENT LOGIN -->
+        <form id="loginForm" onsubmit="studentLogin(event)">
+            <h2>Student Login</h2>
+
+            <label>Email Address</label>
+            <input type="email" id="loginEmail"
+                placeholder="Enter your email" required>
+
+            <label>Password</label>
+            <input type="password" id="loginPassword"
+                placeholder="Enter password" required>
+
+            <button class="primary-btn" type="submit">
+                Login
+            </button>
+
+            <div class="auth-links">
+                Don't have an account?
+                <a onclick="switchAuth('signup')">Sign Up</a>
+            </div>
+        </form>
+
+        <!-- STUDENT SIGNUP -->
+        <form id="signupForm" class="hidden"
+            onsubmit="studentSignup(event)">
+            <h2>Create Student Account</h2>
+
+            <label>Full Name</label>
+            <input type="text" id="signupName"
+                placeholder="Enter your name" required>
+
+            <label>Email Address</label>
+            <input type="email" id="signupEmail"
+                placeholder="Enter email" required>
+
+            <label>Student UID</label>
+            <input type="text" id="signupUID"
+                placeholder="Enter your UID" required>
+
+            <label>Password</label>
+            <input type="password" id="signupPassword"
+                placeholder="Create password" minlength="6" required>
+
+            <button class="primary-btn" type="submit">
+                Create Account
+            </button>
+
+            <div class="auth-links">
+                Already registered?
+                <a onclick="switchAuth('login')">Login</a>
+            </div>
+        </form>
+
+        <!-- ADMIN LOGIN -->
+        <form id="adminForm" class="hidden"
+            onsubmit="adminLogin(event)">
+            <h2>Admin Login</h2>
+
+            <label>Admin Email</label>
+            <input type="email" id="adminEmail"
+                placeholder="Admin email" required>
+
+            <label>Password</label>
+            <input type="password" id="adminPassword"
+                placeholder="Admin password" required>
+
+            <button class="primary-btn" type="submit">
+                Admin Login
+            </button>
+
+            <div class="auth-links">
+                <a onclick="switchAuth('login')">
+                    Back to Student Login
+                </a>
+            </div>
+        </form>
+
+    </div>
+</section>
+
+
+<!-- MAIN APPLICATION -->
+<div id="appSection" class="app-section hidden">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <h2>🎓 Smart Campus</h2>
+
+        <button class="active" onclick="showPage('dashboard', this)">
+            🏠 Dashboard
+        </button>
+
+        <button onclick="showPage('facilities', this)">
+            🏢 Facilities
+        </button>
+
+        <button id="myBookingMenu"
+            onclick="showPage('bookings', this)">
+            📅 My Bookings
+        </button>
+
+        <button id="adminMenu" class="hidden"
+            onclick="showPage('adminBookings', this)">
+            ⚙️ Manage Bookings
+        </button>
+
+        <button onclick="showPage('profile', this)">
+            👤 My Profile
+        </button>
+
+        <button onclick="logout()">
+            🚪 Logout
+        </button>
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+
+        <div class="topbar">
+            <h1 id="pageTitle">Dashboard</h1>
+            <button class="logout-btn" onclick="logout()">
+                Logout
+            </button>
+        </div>
+
+        <!-- DASHBOARD -->
+        <section id="dashboard" class="content-section active">
+
+            <div class="welcome">
+                <h2 id="welcomeText">Welcome to Smart Campus!</h2>
+                <p>Manage your campus facilities and resources easily.</p>
+            </div>
+
+            <div class="stats">
+                <div class="stat-card">
+                    <h3 id="totalFacilities">6</h3>
+                    <p>Total Facilities</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3 id="totalBookings">0</h3>
+                    <p>Total Bookings</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3 id="pendingBookings">0</h3>
+                    <p>Pending Bookings</p>
+                </div>
+            </div>
+
+            <h2 class="section-title">Available Facilities</h2>
+            <div class="facility-grid" id="dashboardFacilities"></div>
+        </section>
+
+
+        <!-- FACILITIES -->
+        <section id="facilities" class="content-section">
+            <h2 class="section-title">Campus Facilities</h2>
+            <div class="facility-grid" id="facilityGrid"></div>
+        </section>
+
+
+        <!-- BOOKING FORM -->
+        <section id="bookingFormPage" class="content-section">
+            <h2 class="section-title">Book a Facility</h2>
+
+            <form class="booking-form" onsubmit="createBooking(event)">
+
+                <label>Facility</label>
+                <input type="text" id="bookingFacility" readonly>
+
+                <label>Booking Date</label>
+                <input type="date" id="bookingDate" required>
+
+                <label>Time Slot</label>
+                <select id="bookingTime" required>
+                    <option value="">Select time slot</option>
+                    <option>09:00 AM - 10:00 AM</option>
+                    <option>10:00 AM - 11:00 AM</option>
+                    <option>11:00 AM - 12:00 PM</option>
+                    <option>12:00 PM - 01:00 PM</option>
+                    <option>02:00 PM - 03:00 PM</option>
+                    <option>03:00 PM - 04:00 PM</option>
+                </select>
+
+                <label>Purpose</label>
+                <input type="text" id="bookingPurpose"
+                    placeholder="Enter booking purpose" required>
+
+                <button class="primary-btn" type="submit">
+                    Submit Booking
+                </button>
+
+                <button type="button" class="cancel-btn"
+                    onclick="showPage('facilities')">
+                    Cancel
+                </button>
+            </form>
+        </section>
+
+
+        <!-- STUDENT BOOKINGS -->
+        <section id="bookings" class="content-section">
+            <h2 class="section-title">My Bookings</h2>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Facility</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Purpose</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="myBookingsTable"></tbody>
+                </table>
+            </div>
+        </section>
+
+
+        <!-- ADMIN BOOKINGS -->
+        <section id="adminBookings" class="content-section">
+            <h2 class="section-title">Manage All Bookings</h2>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Facility</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Purpose</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminBookingsTable"></tbody>
+                </table>
+            </div>
+        </section>
+
+
+        <!-- PROFILE -->
+        <section id="profile" class="content-section">
+            <h2 class="section-title">My Profile</h2>
+
+            <div class="profile-card">
+                <h2>👤 User Information</h2>
+                <p><b>Name:</b> <span id="profileName"></span></p>
+                <p><b>Email:</b> <span id="profileEmail"></span></p>
+                <p><b>UID:</b> <span id="profileUID"></span></p>
+                <p><b>Role:</b> <span id="profileRole"></span></p>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+
+<script>
+
+// DATABASE
+const ADMIN_EMAIL = "admin@12345.com";
+const ADMIN_PASSWORD = "Admin12345";
+
+const facilities = [
+    {
+        name: "Computer Lab",
+        icon: "💻",
+        description: "Advanced computer lab for programming and practical work."
+    },
+    {
+        name: "Library",
+        icon: "📚",
+        description: "Book your library study space."
+    },
+    {
+        name: "Seminar Hall",
+        icon: "🎤",
+        description: "Space for seminars, meetings and presentations."
+    },
+    {
+        name: "Sports Ground",
+        icon: "⚽",
+        description: "Book sports facilities for campus activities."
+    },
+    {
+        name: "Conference Room",
+        icon: "🏢",
+        description: "Meeting space for group discussions."
+    },
+    {
+        name: "Auditorium",
+        icon: "🎭",
+        description: "Large space for campus events and programs."
+    }
+];
+
+let users = JSON.parse(localStorage.getItem("sc_users")) || [];
+let bookings = JSON.parse(localStorage.getItem("sc_bookings")) || [];
+let currentUser = null;
+let selectedFacility = "";
+
+function saveData() {
+    localStorage.setItem("sc_users", JSON.stringify(users));
+    localStorage.setItem("sc_bookings", JSON.stringify(bookings));
+}
+
+
+// AUTH SCREEN SWITCHING
+function switchAuth(type) {
+
+    document.getElementById("loginForm").classList.add("hidden");
+    document.getElementById("signupForm").classList.add("hidden");
+    document.getElementById("adminForm").classList.add("hidden");
+
+    document.getElementById("studentTab").classList.remove("active");
+    document.getElementById("adminTab").classList.remove("active");
+
+    if (type === "login") {
+        document.getElementById("loginForm").classList.remove("hidden");
+        document.getElementById("studentTab").classList.add("active");
+    }
+
+    if (type === "signup") {
+        document.getElementById("signupForm").classList.remove("hidden");
+        document.getElementById("studentTab").classList.add("active");
+    }
+
+    if (type === "admin") {
+        document.getElementById("adminForm").classList.remove("hidden");
+        document.getElementById("adminTab").classList.add("active");
+    }
+}
+
+
+// STUDENT SIGNUP
+function studentSignup(event) {
+    event.preventDefault();
+
+    const name = document.getElementById("signupName").value.trim();
+    const email = document.getElementById("signupEmail").value.trim().toLowerCase();
+    const uid = document.getElementById("signupUID").value.trim();
+    const password = document.getElementById("signupPassword").value;
+
+    if (users.some(user => user.email === email)) {
+        alert("This email is already registered!");
+        return;
+    }
+
+    if (users.some(user => user.uid === uid)) {
+        alert("This UID is already registered!");
+        return;
+    }
+
+    users.push({
+        name,
+        email,
+        uid,
+        password,
+        role: "student"
+    });
+
+    saveData();
+
+    alert("Signup successful! Please login.");
+    document.getElementById("signupForm").reset();
+    document.getElementById("loginEmail").value = email;
+
+    switchAuth("login");
+}
+
+
+// STUDENT LOGIN
+function studentLogin(event) {
+    event.preventDefault();
+
+    const email = document.getElementById("loginEmail").value.trim().toLowerCase();
+    const password = document.getElementById("loginPassword").value;
+
+    const user = users.find(
+        user => user.email === email &&
+                user.password === password
+    );
+
+    if (!user) {
+        alert("Invalid email or password!");
+        return;
+    }
+
+    createSession(user);
+}
+
+
+// ADMIN LOGIN
+function adminLogin(event) {
+    event.preventDefault();
+
+    const email = document.getElementById("adminEmail").value.trim().toLowerCase();
+    const password = document.getElementById("adminPassword").value;
+
+    if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+
+        createSession({
+            name: "Campus Administrator",
+            email: ADMIN_EMAIL,
+            uid: "ADMIN001",
+            role: "admin"
+        });
+
+    } else {
+        alert("Invalid admin credentials!");
+    }
+}
+
+
+// SESSION CREATION
+function createSession(user) {
+
+    currentUser = user;
+
+    sessionStorage.setItem("sc_session", JSON.stringify(user));
+
+    // IMPORTANT: Hide login, show dashboard
+    document.getElementById("authSection").classList.add("hidden");
+    document.getElementById("appSection").classList.remove("hidden");
+
+    setupUser();
+}
+
+
+// INITIALIZATION
+function initializeApp() {
+
+    // Hide dashboard first to prevent both screens showing together
+    document.getElementById("appSection").classList.add("hidden");
+    document.getElementById("authSection").classList.remove("hidden");
+
+    const savedSession = sessionStorage.getItem("sc_session");
+
+    if (savedSession) {
+        try {
+            const user = JSON.parse(savedSession);
+
+            if (user && user.email && user.role) {
+                createSession(user);
+                return;
+            }
+        } catch (error) {
+            sessionStorage.removeItem("sc_session");
+        }
+    }
+
+    currentUser = null;
+    switchAuth("login");
+}
+
+
+// SETUP USER
+function setupUser() {
+
+    document.getElementById("welcomeText").innerText =
+        "Welcome, " + currentUser.name + "!";
+
+    document.getElementById("profileName").innerText = currentUser.name;
+    document.getElementById("profileEmail").innerText = currentUser.email;
+    document.getElementById("profileUID").innerText = currentUser.uid;
+    document.getElementById("profileRole").innerText = currentUser.role;
+
+    const isAdmin = currentUser.role === "admin";
+
+    document.getElementById("adminMenu").classList.toggle("hidden", !isAdmin);
+    document.getElementById("myBookingMenu").classList.toggle("hidden", isAdmin);
+
+    renderFacilities();
+    renderMyBookings();
+    renderAdminBookings();
+    updateStats();
+
+    showPage("dashboard");
+}
+
+
+// PAGE NAVIGATION
+function showPage(page, button) {
+
+    if (!currentUser) return;
+
+    document.querySelectorAll(".content-section").forEach(section => {
+        section.classList.remove("active");
+    });
+
+    const selectedPage = document.getElementById(page);
+
+    if (selectedPage) {
+        selectedPage.classList.add("active");
+    }
+
+    document.querySelectorAll(".sidebar button").forEach(btn => {
+        btn.classList.remove("active");
+    });
+
+    if (button) {
+        button.classList.add("active");
+    } else {
+        const sidebarButtons = document.querySelectorAll(".sidebar button");
+        sidebarButtons[0].classList.add("active");
+    }
+
+    const titles = {
+        dashboard: "Dashboard",
+        facilities: "Campus Facilities",
+        bookingFormPage: "Book Facility",
+        bookings: "My Bookings",
+        adminBookings: "Manage Bookings",
+        profile: "My Profile"
+    };
+
+    document.getElementById("pageTitle").innerText =
+        titles[page] || "Smart Campus";
+}
+
+
+// RENDER FACILITIES
+function renderFacilities() {
+
+    let html = "";
+
+    facilities.forEach((facility, index) => {
+
+        html += `
+        <div class="facility-card">
+            <div class="facility-icon">${facility.icon}</div>
+            <h3>${facility.name}</h3>
+            <p>${facility.description}</p>
+
+            <button class="book-btn"
+                onclick="openBooking(${index})">
+                Book Now
+            </button>
+        </div>
+        `;
+    });
+
+    document.getElementById("facilityGrid").innerHTML = html;
+    document.getElementById("dashboardFacilities").innerHTML = html;
+}
+
+
+// OPEN BOOKING FORM
+function openBooking(index) {
+
+    selectedFacility = facilities[index].name;
+
+    document.getElementById("bookingFacility").value =
+        selectedFacility;
+
+    const dateInput = document.getElementById("bookingDate");
+
+    const today = new Date();
+    const localDate = new Date(
+        today.getTime() - today.getTimezoneOffset() * 60000
+    ).toISOString().split("T")[0];
+
+    dateInput.min = localDate;
+    dateInput.value = "";
+
+    document.getElementById("bookingPurpose").value = "";
+    document.getElementById("bookingTime").value = "";
+
+    showPage("bookingFormPage");
+}
+
+
+// CREATE BOOKING
+function createBooking(event) {
+    event.preventDefault();
+
+    if (!currentUser || currentUser.role !== "student") {
+        alert("Only students can book facilities.");
+        return;
+    }
+
+    const date = document.getElementById("bookingDate").value;
+    const time = document.getElementById("bookingTime").value;
+    const purpose = document.getElementById("bookingPurpose").value.trim();
+
+    if (!date || !time || !purpose) {
+        alert("Please fill all fields.");
+        return;
+    }
+
+    const conflict = bookings.some(booking =>
+        booking.facility === selectedFacility &&
+        booking.date === date &&
+        booking.time === time &&
+        booking.status === "Approved"
+    );
+
+    if (conflict) {
+        alert("This facility is already booked for that time slot.");
+        return;
+    }
+
+    bookings.push({
+        id: Date.now(),
+        studentName: currentUser.name,
+        studentEmail: currentUser.email,
+        facility: selectedFacility,
+        date,
+        time,
+        purpose,
+        status: "Pending"
+    });
+
+    saveData();
+
+    alert("Booking submitted successfully! Waiting for admin approval.");
+
+    renderMyBookings();
+    renderAdminBookings();
+    updateStats();
+
+    showPage("bookings");
+}
+
+
+// STUDENT BOOKING TABLE
+function renderMyBookings() {
+
+    if (!currentUser || currentUser.role !== "student") return;
+
+    const myData = bookings.filter(
+        booking => booking.studentEmail === currentUser.email
+    );
+
+    let html = "";
+
+    if (myData.length === 0) {
+        html = `<tr><td colspan="5">No bookings found.</td></tr>`;
+    } else {
+
+        myData.forEach(booking => {
+
+            html += `
+            <tr>
+                <td>${booking.facility}</td>
+                <td>${booking.date}</td>
+                <td>${booking.time}</td>
+                <td>${booking.purpose}</td>
+                <td>
+                    <span class="status ${booking.status}">
+                        ${booking.status}
+                    </span>
+                </td>
+            </tr>
+            `;
+        });
+    }
+
+    document.getElementById("myBookingsTable").innerHTML = html;
+}
+
+
+// ADMIN BOOKING TABLE
+function renderAdminBookings() {
+
+    if (!currentUser || currentUser.role !== "admin") return;
+
+    let html = "";
+
+    if (bookings.length === 0) {
+        html = `<tr><td colspan="7">No bookings available.</td></tr>`;
+    } else {
+
+        bookings.forEach(booking => {
+
+            html += `
+            <tr>
+                <td>${booking.studentName}</td>
+                <td>${booking.facility}</td>
+                <td>${booking.date}</td>
+                <td>${booking.time}</td>
+                <td>${booking.purpose}</td>
+                <td>
+                    <span class="status ${booking.status}">
+                        ${booking.status}
+                    </span>
+                </td>
+                <td>
+                    ${
+                        booking.status === "Pending"
+                        ? `
+                        <button class="action-btn approve"
+                            onclick="updateBooking(${booking.id}, 'Approved')">
+                            Approve
+                        </button>
+
+                        <button class="action-btn reject"
+                            onclick="updateBooking(${booking.id}, 'Rejected')">
+                            Reject
+                        </button>
+                        `
+                        : "-"
+                    }
+                </td>
+            </tr>
+            `;
+        });
+    }
+
+    document.getElementById("adminBookingsTable").innerHTML = html;
+}
+
+
+// UPDATE BOOKING STATUS
+function updateBooking(id, status) {
+
+    const booking = bookings.find(item => item.id === id);
+
+    if (!booking) return;
+
+    if (status === "Approved") {
+
+        const conflict = bookings.some(item =>
+            item.id !== id &&
+            item.facility === booking.facility &&
+            item.date === booking.date &&
+            item.time === booking.time &&
+            item.status === "Approved"
+        );
+
+        if (conflict) {
+            alert("Another booking is already approved for this slot.");
+            return;
+        }
+    }
+
+    booking.status = status;
+
+    saveData();
+
+    renderAdminBookings();
+    renderMyBookings();
+    updateStats();
+
+    alert("Booking " + status.toLowerCase() + " successfully!");
+}
+
+
+// UPDATE DASHBOARD STATS
+function updateStats() {
+
+    document.getElementById("totalFacilities").innerText =
+        facilities.length;
+
+    if (!currentUser) return;
+
+    const visibleBookings = currentUser.role === "admin"
+        ? bookings
+        : bookings.filter(b => b.studentEmail === currentUser.email);
+
+    document.getElementById("totalBookings").innerText =
+        visibleBookings.length;
+
+    document.getElementById("pendingBookings").innerText =
+        visibleBookings.filter(b => b.status === "Pending").length;
+}
+
+
+// LOGOUT
+function logout() {
+
+    sessionStorage.removeItem("sc_session");
+
+    currentUser = null;
+
+    // Hide dashboard, show login
+    document.getElementById("appSection").classList.add("hidden");
+    document.getElementById("authSection").classList.remove("hidden");
+
+    document.getElementById("loginForm").reset();
+    document.getElementById("adminForm").reset();
+
+    switchAuth("login");
+}
+
+
+// START APPLICATION
+initializeApp();
+
+</script>
+
+</body>
+</html>
